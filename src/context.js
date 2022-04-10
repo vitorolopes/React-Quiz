@@ -11,8 +11,9 @@ const AppProvider = ({children}) => {
     const [isLoading, setIsLoading] = useState(false);
     const [questions, setQuestions] = useState([]);
     const [index, setIndex] = useState(0);
-
-   const [numberOfCorrect, setNumberOfCorrect] = useState(0)
+    const [numberOfCorrect, setNumberOfCorrect] = useState(0)
+//! ------------------------
+    const [showModal, setShowModal] = useState(false)
 
     async function fetchQuestions (url) {
         setIsLoading(true);
@@ -36,7 +37,9 @@ const AppProvider = ({children}) => {
 
     const handleClick = () => {
         if (index === questions.length - 1){
-            // open Modal
+ //! ------------------------
+            setShowModal(true)
+            
             setIndex(0)
         } else {
             setIndex(oldIndex => oldIndex + 1)
@@ -49,6 +52,12 @@ const AppProvider = ({children}) => {
        }
        handleClick()
     }
+ //! ------------------------
+    const closeModal = () => {
+        setWaiting(true)
+        setNumberOfCorrect(0)
+        setShowModal(false)
+    }
 
     useEffect(() => {
       fetchQuestions(tempUrl)
@@ -58,7 +67,7 @@ const AppProvider = ({children}) => {
         <AppContext.Provider value={
             { waiting, isLoading, questions,
               index, handleClick, checkAnswer,
-              numberOfCorrect
+              numberOfCorrect, showModal, closeModal
             } 
         }>
             {children}

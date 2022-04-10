@@ -3,11 +3,13 @@ import {useGlobalContext} from './context';
 import SetupForm from './SetupForm';
 import Loading from './Loading';
 
+import Modal from './Modal';
+
 function App() {
 
   const {waiting, isLoading, questions,
          handleClick, index, checkAnswer,
-         numberOfCorrect} = useGlobalContext();
+         numberOfCorrect, showModal} = useGlobalContext();
 
   if(waiting){
     return(
@@ -29,7 +31,7 @@ function App() {
     <main >
       <section className="quiz"> 
          <p className="correct-answers">
-            correct answers : {numberOfCorrect} / 100
+            correct answers : {numberOfCorrect} / {questions.length}
           </p>
 
         <article className="container">
@@ -51,7 +53,11 @@ function App() {
 
           </div>
         </article>
+        {/* //! ------------------------ */}
+         { showModal && <Modal/>}
+         
       </section>
+
     </main>
   );
 }

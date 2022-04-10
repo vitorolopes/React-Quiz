@@ -290,14 +290,14 @@ Modal
   display: flex;
   align-items: center;
   justify-content: center;
-  opacity: 0;
+  /* opacity: 0; */
   transition: var(--transition);
-  z-index: -1;
+  /* z-index: -1; */
 }
-.isOpen {
+/* .isOpen {
   opacity: 1;
   z-index: 999;
-}
+} */
 
 .modal-content {
   background: var(--clr-white);
