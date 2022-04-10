@@ -6,7 +6,8 @@ import Loading from './Loading';
 function App() {
 
   const {waiting, isLoading, questions,
-         handleClick, index} = useGlobalContext();
+         handleClick, index, checkAnswer,
+         numberOfCorrect} = useGlobalContext();
 
   if(waiting){
     return(
@@ -28,7 +29,7 @@ function App() {
     <main >
       <section className="quiz"> 
          <p className="correct-answers">
-            correct answers : 100 / 100
+            correct answers : {numberOfCorrect} / 100
           </p>
 
         <article className="container">
@@ -36,7 +37,8 @@ function App() {
           <div>
             {answers.map( (answer, key_index) => 
               <button key={key_index} className="answer-btn"
-                dangerouslySetInnerHTML={{__html: answer}}
+                      dangerouslySetInnerHTML={{__html: answer}}
+                      onClick={()=>checkAnswer(answer === correct_answer)}
               >
               </button>
             )}

@@ -10,7 +10,9 @@ const AppProvider = ({children}) => {
     const [waiting, setWaiting] = useState(true);
     const [isLoading, setIsLoading] = useState(false);
     const [questions, setQuestions] = useState([]);
-    const [index, setIndex] = useState(0)
+    const [index, setIndex] = useState(0);
+
+   const [numberOfCorrect, setNumberOfCorrect] = useState(0)
 
     async function fetchQuestions (url) {
         setIsLoading(true);
@@ -41,6 +43,13 @@ const AppProvider = ({children}) => {
         }   
     }
 
+    const checkAnswer = (boolean_value) => { 
+       if(boolean_value){
+           setNumberOfCorrect(oldNumber => oldNumber + 1)
+       }
+       handleClick()
+    }
+
     useEffect(() => {
       fetchQuestions(tempUrl)
     }, [])
@@ -48,7 +57,8 @@ const AppProvider = ({children}) => {
     return(
         <AppContext.Provider value={
             { waiting, isLoading, questions,
-              index, handleClick
+              index, handleClick, checkAnswer,
+              numberOfCorrect
             } 
         }>
             {children}
