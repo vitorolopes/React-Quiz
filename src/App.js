@@ -5,7 +5,8 @@ import Loading from './Loading';
 
 function App() {
 
-  const {waiting, isLoading, questions} = useGlobalContext();
+  const {waiting, isLoading, questions,
+         handleClick, index} = useGlobalContext();
 
   if(waiting){
     return(
@@ -19,8 +20,7 @@ function App() {
     )
   }
 
-  const indexTemp = 0;
-  const { question, correct_answer, incorrect_answers} = questions[indexTemp]
+  const { question, correct_answer, incorrect_answers} = questions[index]
   const answers = [...incorrect_answers, correct_answer]
   // console.log(answers);
 
@@ -40,6 +40,13 @@ function App() {
               >
               </button>
             )}
+
+              <button className='next-question'
+                      onClick={handleClick}
+              >
+                next question
+              </button>
+
           </div>
         </article>
       </section>

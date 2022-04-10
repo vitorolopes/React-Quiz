@@ -10,6 +10,7 @@ const AppProvider = ({children}) => {
     const [waiting, setWaiting] = useState(true);
     const [isLoading, setIsLoading] = useState(false);
     const [questions, setQuestions] = useState([]);
+    const [index, setIndex] = useState(0)
 
     async function fetchQuestions (url) {
         setIsLoading(true);
@@ -31,13 +32,24 @@ const AppProvider = ({children}) => {
         }
     }
 
+    const handleClick = () => {
+        if (index === questions.length - 1){
+            // open Modal
+            setIndex(0)
+        } else {
+            setIndex(oldIndex => oldIndex + 1)
+        }   
+    }
+
     useEffect(() => {
       fetchQuestions(tempUrl)
     }, [])
     
     return(
         <AppContext.Provider value={
-            { waiting, isLoading, questions } 
+            { waiting, isLoading, questions,
+              index, handleClick
+            } 
         }>
             {children}
         </AppContext.Provider>
