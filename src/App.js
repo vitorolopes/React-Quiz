@@ -5,7 +5,7 @@ import Loading from './Loading';
 
 function App() {
 
-  const {waiting, isLoading} = useGlobalContext();
+  const {waiting, isLoading, questions} = useGlobalContext();
 
   if(waiting){
     return(
@@ -19,10 +19,31 @@ function App() {
     )
   }
 
+  const indexTemp = 0;
+  const { question, correct_answer, incorrect_answers} = questions[indexTemp]
+  const answers = [...incorrect_answers, correct_answer]
+  // console.log(answers);
+
   return (
-    <div className="App">
-      quiz
-    </div>
+    <main >
+      <section className="quiz"> 
+         <p className="correct-answers">
+            correct answers : 100 / 100
+          </p>
+
+        <article className="container">
+          <h2 dangerouslySetInnerHTML={{__html: question}}/>
+          <div>
+            {answers.map( (answer, key_index) => 
+              <button key={key_index} className="answer-btn"
+                dangerouslySetInnerHTML={{__html: answer}}
+              >
+              </button>
+            )}
+          </div>
+        </article>
+      </section>
+    </main>
   );
 }
 

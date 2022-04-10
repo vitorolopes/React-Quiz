@@ -1,7 +1,7 @@
 import React, { useContext, useState, useEffect } from 'react';
 const axios = require("axios");
 
-const tempUrl = "https://opentdb.com/api.php?amount=50&category=23&difficulty=medium&type=multiple"
+const tempUrl = "https://opentdb.com/api.php?amount=5&category=23&difficulty=medium&type=multiple"
 
 const AppContext = React.createContext();
 
@@ -19,7 +19,7 @@ const AppProvider = ({children}) => {
             // console.log(response);
             if(response){
                 const data = response.data.results
-                console.log(data)         
+                // console.log(data)         
                 setQuestions(data)
                 setIsLoading(false)
                 setWaiting(false)  
@@ -37,7 +37,7 @@ const AppProvider = ({children}) => {
     
     return(
         <AppContext.Provider value={
-            { waiting, isLoading } 
+            { waiting, isLoading, questions } 
         }>
             {children}
         </AppContext.Provider>
