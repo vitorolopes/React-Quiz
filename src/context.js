@@ -11,9 +11,11 @@ const AppProvider = ({children}) => {
     const [isLoading, setIsLoading] = useState(false);
     const [questions, setQuestions] = useState([]);
     const [index, setIndex] = useState(0);
-    const [numberOfCorrect, setNumberOfCorrect] = useState(0)
-//! ------------------------
-    const [showModal, setShowModal] = useState(false)
+    const [numberOfCorrect, setNumberOfCorrect] = useState(0);
+    const [showModal, setShowModal] = useState(false);
+    //! -------------- 
+    const [quiz, setQuiz] = useState({amount: 5, category: 23, difficulty: "medium"})
+
 
     async function fetchQuestions (url) {
         setIsLoading(true);
@@ -37,9 +39,7 @@ const AppProvider = ({children}) => {
 
     const handleClick = () => {
         if (index === questions.length - 1){
- //! ------------------------
             setShowModal(true)
-            
             setIndex(0)
         } else {
             setIndex(oldIndex => oldIndex + 1)
@@ -52,22 +52,36 @@ const AppProvider = ({children}) => {
        }
        handleClick()
     }
- //! ------------------------
+
     const closeModal = () => {
         setWaiting(true)
         setNumberOfCorrect(0)
         setShowModal(false)
     }
+//! --------------
+    // useEffect(() => {
+    //   fetchQuestions(tempUrl)
+    // }, [])
+    const handleChange = (e) => {
+        const name = e.target.name;
+        const value = e.target.value;
+        setQuiz({...quiz, [name]: value} )
+    }
 
-    useEffect(() => {
-      fetchQuestions(tempUrl)
-    }, [])
+
+    const handleSubmit = (e) => {
+        e.preventDefault()
+        //* fetchQuestions(url + amount, category, difficulty)
+    }
     
     return(
         <AppContext.Provider value={
             { waiting, isLoading, questions,
               index, handleClick, checkAnswer,
-              numberOfCorrect, showModal, closeModal
+              numberOfCorrect, showModal, closeModal,
+              quiz, 
+              handleChange,
+              handleSubmit
             } 
         }>
             {children}
