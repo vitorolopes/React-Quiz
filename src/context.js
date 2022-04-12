@@ -1,7 +1,9 @@
 import React, { useContext, useState, useEffect } from 'react';
 const axios = require("axios");
 
-const tempUrl = "https://opentdb.com/api.php?amount=5&category=23&difficulty=medium&type=multiple"
+const API_ENDPOINT = "https://opentdb.com/api.php?"
+// amount=5&category=23&difficulty=medium&type=multiple"
+const table = {sports: 21,history: 23,politics: 24};
 
 const AppContext = React.createContext();
 
@@ -13,8 +15,7 @@ const AppProvider = ({children}) => {
     const [index, setIndex] = useState(0);
     const [numberOfCorrect, setNumberOfCorrect] = useState(0);
     const [showModal, setShowModal] = useState(false);
-    //! -------------- 
-    const [quiz, setQuiz] = useState({amount: 5, category: 23, difficulty: "medium"})
+    const [quiz, setQuiz] = useState({amount: 5, category: "sports", difficulty: "medium"})
 
 
     async function fetchQuestions (url) {
@@ -58,30 +59,27 @@ const AppProvider = ({children}) => {
         setNumberOfCorrect(0)
         setShowModal(false)
     }
-//! --------------
-    // useEffect(() => {
-    //   fetchQuestions(tempUrl)
-    // }, [])
+
     const handleChange = (e) => {
         const name = e.target.name;
         const value = e.target.value;
         setQuiz({...quiz, [name]: value} )
     }
 
-
     const handleSubmit = (e) => {
         e.preventDefault()
         //* fetchQuestions(url + amount, category, difficulty)
+        const {amount, category, difficulty} = quiz;
+        const url = `${API_ENDPOINT}amount=${amount}&category=${table[category]}&difficulty=${difficulty}&type=multiple`        
+        fetchQuestions(url)
     }
     
     return(
         <AppContext.Provider value={
             { waiting, isLoading, questions,
               index, handleClick, checkAnswer,
-              numberOfCorrect, showModal, closeModal,
-              quiz, 
-              handleChange,
-              handleSubmit
+              numberOfCorrect, showModal, closeModal, quiz, 
+              handleChange,handleSubmit             
             } 
         }>
             {children}

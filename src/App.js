@@ -23,8 +23,13 @@ function App() {
     )
   }
 
-  const { question, correct_answer, incorrect_answers} = questions[index]
-  const answers = [...incorrect_answers, correct_answer]
+  const { question, correct_answer, incorrect_answers} = questions[index];
+  const answers = [...incorrect_answers, correct_answer];
+  const oldIndex = answers.length - 1;
+  const newIndex = Math.floor(Math.random() * (answers.length) );
+  const el = answers.splice(oldIndex, 1)[0]
+  answers.splice(newIndex, 0, el)
+
   // console.log(answers);
 
   return (
@@ -53,7 +58,7 @@ function App() {
 
           </div>
         </article>
-        {/* //! ------------------------ */}
+
          { showModal && <Modal/>}
          
       </section>
